@@ -35,14 +35,14 @@ class ProductCreate(CreateView):
     template_name = 'shop/add-product.html'
 
     def form_valid(self, form):
-        form.save(commit=False)
+        new_product = form.save(commit=False)
         # get current logged in user
         user = self.request.user.id
         # match the current logged in user to an owner in the Shop model
         s = Shop.objects.get(owner=user)
-        # get the id of that owner's shop identification number
-        form.business = s.id
-        form.save()
+        # assign the shop instance to the product
+        new_product.business = s
+        new_product.save()
         # This method is called when valid form data has been POSTed.
         # It should return an HttpResponse.
         return super(ProductCreate, self).form_valid(form)
