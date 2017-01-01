@@ -40,19 +40,6 @@ class Product(models.Model):
     def __str__(self):
         return self.product_name
 
-    # def add_product_to_shop(self, request, **kwargs):
-    #     # get current logged in user
-    #     user = request.user
-    #     # match the current logged in user to an owner in the Shop model
-    #     s = Shop.objects.get(owner=user)
-    #     #get the id of that owner's shop
-    #     shop = s.Shop.id
-    #     if kwargs["created"]:
-    #         up = Product(business=shop)
-    #         up.save()
-    #         print(up)
-    # post_save.connect(add_product_to_shop, sender=Shop)
-
 
 # a future function that will allow for the viewing of a shop
     def get_absolute_url(self):
