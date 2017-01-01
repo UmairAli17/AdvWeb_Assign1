@@ -1,0 +1,35 @@
+{% extends 'shop/base.html' %}
+
+{% block title %}All Products{% endblock %}
+
+{% block main-content %}
+    {% for shop in shop_list %}
+        <div class="container-fluid">
+            <div class="col-sm-4 col-md-4 col-lg-4 album-det-container">
+                <!--Album Image-->
+                <div class="thumbnail">
+                    <!--the .url ensures that whatever is being outputted from the FileField is in the form of an actual URL-->
+                    <img src="{{ shop.shoplogo_or_default }}" class="img-responsive">
+                </div>
+                <div class="caption">
+                    <h1>Seller Name:</h1>
+                    <h3>{{ shop.owner }}</h3>
+                </div>
+
+                <a href="{% url 'shop:detail' shop.id %}"><button type="button" class="btn btn-default">View Details</button></a>
+
+                <!--Delete Button-->
+
+                <form action="#" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="#" value="#">
+                    <button type="submit" class="btn btn-default">
+                        <span class="glyphicon glyphicon-trash">
+
+                        </span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}

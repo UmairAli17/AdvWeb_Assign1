@@ -1,0 +1,26 @@
+<!--Make sure this html file extends the base.html file template-->
+{% extends 'shop/base.html' %}
+{% block title %}Product Details{% endblock%}
+
+
+{% block main-content %}
+    <div class="col-sm-6 col-md-6 col-lg-6  col-sm-offset-3 col-md-offset-3 col-lg-offset-3 album-det-container">
+    <div class="thumbnail">
+        <!--the .url ensures that whatever is being outputted from the FileField is in the form of an actual URL-->
+        <img src="{{ shop.shoplogo_or_default }}" class="img-responsive">
+    </div>
+    <h1>{{ shop.owner }}</h1>
+        <h1>{{ shop.id }}</h1>
+    <ul>
+
+    </ul>
+
+    {% if error_message %}
+        <p><strong>{{ error_message }}</strong></p>
+    {% endif %}
+
+    {% for shop in shop.products.all %}
+        <h3>Seller Details</h3>
+        <h5>{{ shop.product_name }}</h5>
+    {% endfor %}
+{% endblock %}
