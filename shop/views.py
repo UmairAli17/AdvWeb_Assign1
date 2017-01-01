@@ -1,7 +1,8 @@
 from django.views import generic
-from .forms import UserLogForm, AddProductForm
+from .forms import UserLogForm, AddProductForm, UserRegForm
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic.list import ListView
+from django.views.generic import View
 from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login, logout
@@ -48,8 +49,54 @@ class ProductCreate(CreateView):
         return super(ProductCreate, self).form_valid(form)
 
 
+class MyProducts(ListView):
+    template_name = 'shop/my-products.html'
+    context_object_name = 'my_products'
 
-class LoginView(generic.View):
+    def get_queryset(self):
+        user = self.request.user.id
+        queryset = Product.objects.filter(business__owner=user)
+        return queryset
+
+
+# USER AUTH VIEWS
+
+
+class RegisterView(CreateView):
+     form_class = UserRegForm
+     template_name = 'shop/registration-form.html'
+
+     #display the template when this view is called - when the user requests the page itself
+     def get(self, request):
+         #display the form - None ensures that there won't be any data in it.. yet
+         form = self.form_class(None)
+         return render(request, self.template_name, {'form': form})
+
+     def post(self, request):
+         form = self.form_class(request.POST)
+
+         if form.is_valid():
+             user = form.save(commit=False)
+
+             username = form.cleaned_data['username']
+             password = form.cleaned_data['password']
+
+             user.set_password(password)
+             user.save()
+
+             user = authenticate(username=username, password=password)
+
+             if user is not None:
+                 if user.is_active:
+                     login(request, user)
+                     return HttpResponseRedirect('/shop/')
+                 else:
+                     return HttpResponseRedirect('/shop/')
+
+         return render(request, self.template_name, {'form': form})
+
+
+class LoginView(View):
     form_class = UserLogForm
     template_name = 'shop/login.html'
 
@@ -74,3 +121,10 @@ class LoginView(generic.View):
                 return HttpResponseRedirect('/shop/login')
 
         return HttpResponseRedirect('/shop/login')
+
+
+class LogoutView(View):
+
+    def get(self, request):
+        logout(request)
+        return HttpResponseRedirect('/music/')

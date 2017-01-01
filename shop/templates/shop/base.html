@@ -43,8 +43,9 @@
                             <button type="submit" class="btn btn-default">Search</button>
                         </div>
                     </form>
-                    {% if user.is_authenticated %}
                     <ul class="nav navbar-nav navbar-right">
+                    {% if user.is_authenticated %}
+
                         <li class="">
                             <a href="{% url 'shop:product-add' %} ">
                                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> &nbsp; Add Products
@@ -52,7 +53,7 @@
                         </li>
 
                             <li class="">
-                                <a href="#">
+                                <a href="{% url 'shop:logout' %}">
                                     <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> &nbsp; Logout
                                 </a>
                             </li>
@@ -64,7 +65,7 @@
                             </li>
 
                             <li class="">
-                                <a href="#">
+                                <a href="{% url 'shop:register' %}">
                                     <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span> &nbsp; Register
                                 </a>
                             </li>
