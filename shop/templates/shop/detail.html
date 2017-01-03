@@ -1,6 +1,6 @@
 <!--Make sure this html file extends the base.html file template-->
 {% extends 'shop/base.html' %}
-{% block title %}Product Details{% endblock%}
+{% block title %}Shop Details{% endblock%}
 
 
 {% block main-content %}
@@ -14,13 +14,12 @@
     <ul>
 
     </ul>
-
     {% if error_message %}
         <p><strong>{{ error_message }}</strong></p>
     {% endif %}
-
+    <h3>Seller Details</h3>
     {% for shop in shop.products.all %}
-        <h3>Seller Details</h3>
-        <h5>{{ shop.product_name }}</h5>
+
+        <h5>Product Name:{{ shop.product_name }}</h5>
     {% endfor %}
 {% endblock %}

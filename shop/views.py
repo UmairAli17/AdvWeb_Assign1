@@ -25,15 +25,19 @@ class DetailView(generic.DetailView):
     model = Shop
     template_name = 'shop/detail.html'
 
-
-
 # PRODUCT VIEWS
+
+# Show ALL Products
+
+class AllProducts(ListView):
+    model = Product
+    template_name = 'shop/all_products.html'
 
 
 class ProductCreate(CreateView):
     model = Product
     form_class = AddProductForm
-    template_name = 'shop/add-product.html'
+    template_name = 'shop/add_product.html'
 
     def form_valid(self, form):
         new_product = form.save(commit=False)
@@ -50,7 +54,7 @@ class ProductCreate(CreateView):
 
 
 class MyProducts(ListView):
-    template_name = 'shop/my-products.html'
+    template_name = 'shop/my_products.html'
     context_object_name = 'my_products'
 
     def get_queryset(self):
@@ -58,13 +62,28 @@ class MyProducts(ListView):
         queryset = Product.objects.filter(business__owner=user)
         return queryset
 
+class ProductDetailView(DetailView):
+    model = Product
+    template_name = 'shop/product_detail.html'
+
+# All for the updating of products
+class UpdateProduct(UpdateView):
+    model = Product
+    template_name = 'shop/product_form.html'
+    fields = ['product_name', 'product_desc', 'product_image']
+
+
+class DeleteProduct(DeleteView):
+    model = Product
+    success_url = reverse_lazy('shop:my-products')
+
 
 # USER AUTH VIEWS
 
 
 class RegisterView(CreateView):
      form_class = UserRegForm
-     template_name = 'shop/registration-form.html'
+     template_name = 'shop/registration_form.html'
 
      #display the template when this view is called - when the user requests the page itself
      def get(self, request):
@@ -127,4 +146,4 @@ class LogoutView(View):
 
     def get(self, request):
         logout(request)
-        return HttpResponseRedirect('/music/')
+        return HttpResponseRedirect('/shop/')

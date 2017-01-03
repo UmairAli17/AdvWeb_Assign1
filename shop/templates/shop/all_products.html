@@ -3,20 +3,20 @@
 {% block title %}All Products{% endblock %}
 
 {% block main-content %}
-    {% for shop in shop_list %}
+    {% for product in product_list %}
         <div class="container-fluid">
             <div class="col-sm-4 col-md-4 col-lg-4 album-det-container">
                 <!--Album Image-->
                 <div class="thumbnail">
                     <!--the .url ensures that whatever is being outputted from the FileField is in the form of an actual URL-->
-                    <img src="{{ shop.shoplogo_or_default }}" class="img-responsive">
+                   <img src="{{ product.product_image.url }}" class="img-responsive">
                 </div>
                 <div class="caption">
-                    <h1>Shop Owner:</h1>
-                    <h3>{{ shop.owner }}</h3>
+                    <h1>Product Name</h1>
+                    <h3>{{ product.product_name }}</h3>
                 </div>
 
-                <a href="{% url 'shop:detail' shop.id %}"><button type="button" class="btn btn-default">View Details</button></a>
+                <a href="{% url 'shop:product-details' product.id %}"><button type="button" class="btn btn-default">View Details</button></a>
             </div>
         </div>
     {% endfor %}

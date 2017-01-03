@@ -32,8 +32,8 @@
                             </a>
                         </li>
                         <li class="" >
-                            <a href="#">
-                                <span class="glyphicon glyphicon-music" aria-hidden="true"></span> &nbsp; All Products
+                            <a href="{% url  'shop:all-products' %}">
+                                <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> &nbsp; All Products
                             </a>
                         </li>
                     </ul>
@@ -47,8 +47,14 @@
                     {% if user.is_authenticated %}
 
                         <li class="">
-                            <a href="{% url 'shop:product-add' %} ">
+                            <a href="{% url 'shop:add-product' %} ">
                                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> &nbsp; Add Products
+                            </a>
+                        </li>
+
+                        <li class="">
+                            <a href="{% url 'shop:my-products' %} ">
+                                <span class="glyphicon glyphicon-user" aria-hidden="true"></span> &nbsp; My Products
                             </a>
                         </li>
 

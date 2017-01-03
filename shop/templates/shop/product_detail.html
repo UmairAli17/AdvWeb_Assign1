@@ -1,0 +1,12 @@
+<!--Make sure this html file extends the base.html file template-->
+{% extends 'shop/base.html' %}
+{% block title %}Product Details{% endblock%}
+
+
+{% block main-content %}
+    <div class="col-sm-6 col-md-6 col-lg-6  col-sm-offset-3 col-md-offset-3 col-lg-offset-3 album-det-container">
+    <div class="thumbnail">
+        <!--the .url ensures that whatever is being outputted from the FileField is in the form of an actual URL-->
+        <img src="{{ product.product_image.url }}" class="img-responsive">
+    </div>
+{% endblock %}

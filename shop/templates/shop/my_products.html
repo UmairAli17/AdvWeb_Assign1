@@ -1,0 +1,35 @@
+{% extends 'shop/base.html' %}
+{% block title %}My Products{% endblock %}
+
+{% block main-content %}
+    {% if my_products %}
+        <div class="col-sm-12 col-md-10 col-lg-10 col-md-offset-1 col-lg-offset-1">
+        {% for my in my_products %}
+            <div class="col-sm-4 col-md-4 col-lg-4">
+                <h3>{{ my.product_name }}</h3>
+
+                <a href="{% url 'shop:update-product' my.id %}">
+                    <button type="submit" class="btn btn-default">
+                        <span class="glyphicon glyphicon-pencil"> Edit
+                        </span>
+                    </button>
+                </a>
+
+                <!--Delete Button-->
+
+                <form action="{% url 'shop:delete-product' my.id %}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="my_id" value="{{ my.id }}">
+                    <button type="submit" class="btn btn-default">
+                        <span class="glyphicon glyphicon-trash">
+
+                        </span>
+                    </button>
+                </form>
+            </div>
+        {% endfor %}
+        </div>
+    {% else %}
+<4>I'm Sorry! You haven't got any products! :( How About Adding Some Through <a href="{% url 'shop:product-add' %}">Here?</a></h4>
+    {% endif %}
+{% endblock %}

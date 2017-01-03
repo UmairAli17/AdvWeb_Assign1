@@ -23,6 +23,7 @@ class Shop(models.Model):
             up.save()
     post_save.connect(create_shop, sender=User)
 
+    # set a default shop image if the user decided not to upload one
     def shoplogo_or_default(self, default_path='/static/images/dft/no-img.png'):
         if self.shop_logo:
             return self.shop_logo
@@ -43,4 +44,4 @@ class Product(models.Model):
 
 # a future function that will allow for the viewing of a shop
     def get_absolute_url(self):
-        return reverse('shop:detail', kwargs={'pk': self.pk})
+        return reverse('shop:product-details', kwargs={'pk': self.pk})
