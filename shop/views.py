@@ -39,9 +39,9 @@ class ProductCreate(CreateView):
         new_product = form.save(commit=False)
         # get current logged in user
         user = self.request.user.id
-        # match the current logged in user to an owner in the Shop model
+        # match the current logged in user to an owner in the Shop model.  this will get the primary for that row
         s = Shop.objects.get(owner=user)
-        # assign the shop instance to the product
+        # assign the shop instance (id) to the product
         new_product.business = s
         new_product.save()
         # This method is called when valid form data has been POSTed.
