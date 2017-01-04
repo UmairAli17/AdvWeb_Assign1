@@ -1,0 +1,28 @@
+
+
+
+
+/*
+FORM CSS
+*/
+
+.form-header{
+    text-align: center;
+}
+
+.center-form{
+    height: 100%;
+    margin-top: 50%;
+}
+
+
+.shop-formField{
+    border: solid 1px;
+    padding: 5%;
+    border-radius: .25em;
+    margin: 5%;
+}
+
+.control-label{
+    display: none;
+}
