@@ -24,7 +24,7 @@ class Shop(models.Model):
     post_save.connect(create_shop, sender=User)
 
     # set a default shop image if the user decided not to upload one
-    def shoplogo_or_default(self, default_path='/static/images/dft/no-img.png'):
+    def shoplogo_or_default(self, default_path='/static/shop/images/dft/no-img.png'):
         if self.shop_logo:
             return self.shop_logo
         return default_path
