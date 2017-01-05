@@ -14,7 +14,7 @@ urlpatterns = [
     url(r'^shop/', include('shop.urls'))
 ]
 
-# Whenever we are in dev mode, use the following settings for uploading ofd files/ images
+# Whenever we are in dev mode, use the following settings for uploading of files/ images
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -2,7 +2,7 @@ from django.views import generic
 from .forms import UserLogForm, AddProductForm, UserRegForm
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic.list import ListView
-from django.views.generic import View
+from django.views.generic import View, DetailView
 from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login, logout
@@ -21,13 +21,31 @@ class IndexView(ListView):
         return Shop.objects.all()
 
 
-class DetailView(generic.DetailView):
+class DetailView(DetailView):
     model = Shop
     template_name = 'shop/detail.html'
 
+class MyShopView(DetailView):
+    template_name = 'shop/my_shop.html'
+    context_object_name = 'my_shop'
+
+    # get the current user's shop and pass that into the object
+    def get_object(self, queryset=None):
+        # get the current user's shop
+        user = self.request.user.id
+        usr_shop = Shop.objects.get(owner=user)
+        return usr_shop
+
+class EditMyShop(UpdateView):
+    model = Shop
+    template_name = 'shop/edit_shop.html'
+    fields = ['name', 'shop_logo']
+
+
+
 # PRODUCT VIEWS
 
-# Show ALL Products
+# Show ALL Products:
 
 class AllProducts(ListView):
     model = Product

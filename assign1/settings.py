@@ -74,28 +74,28 @@ WSGI_APPLICATION = 'assign1.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        # DATABASE NAME
-        'NAME': 'assign1_shop',
-        # DATABASE USER NAME
-        'USER': 'root',
-        # DATABASE USER PASSWORD
-        'PASSWORD': 'artemis123',
-        # DATABASE HOST - LOCALHOST IN THIS CASE OR 127.0.0.1
-        'HOST': 'localhost',
-        'PORT': '',
-    }
-}
+##DATABASES = {
+##    'default': {
+##        'ENGINE': 'django.db.backends.mysql',
+##        # DATABASE NAME
+##        'NAME': 'assign1_shop',
+##        # DATABASE USER NAME
+##        'USER': 'root',
+##        # DATABASE USER PASSWORD
+##        'PASSWORD': 'artemis123',
+##        # DATABASE HOST - LOCALHOST IN THIS CASE OR 127.0.0.1
+##        'HOST': 'localhost',
+##        'PORT': '',
+##    }
+##}
 
 # FOR SQLITE SETTINGS
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#     }
-# }
+DATABASES = {
+     'default': {
+         'ENGINE': 'django.db.backends.sqlite3',
+         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+     }
+ }
 
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators

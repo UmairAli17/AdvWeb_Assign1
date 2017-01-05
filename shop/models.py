@@ -2,7 +2,6 @@ from django.db import models
 from django.db.models.signals import post_save
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
-from django.shortcuts import get_object_or_404
 
 # Create your models here.
 
@@ -23,11 +22,17 @@ class Shop(models.Model):
             up.save()
     post_save.connect(create_shop, sender=User)
 
-    # set a default shop image if the user decided not to upload one
-    def shoplogo_or_default(self, default_path='/static/shop/images/dft/no-img.png'):
+    @property
+    def shop_logo_img(self):
+        default_path = '/static/shop/images/dft/no-img.png'
         if self.shop_logo:
-            return self.shop_logo
-        return default_path
+            return self.shop_logo.url
+        else:
+            return default_path
+
+    # redirect user to the user's product page
+    def get_absolute_url(self):
+        return reverse('shop:my-products')
 
 
 # The class that will link a product to the shop
@@ -42,6 +47,6 @@ class Product(models.Model):
         return self.product_name
 
 
-# a future function that will allow for the viewing of a shop
+# a  function that will allow for the viewing of a product
     def get_absolute_url(self):
         return reverse('shop:product-details', kwargs={'pk': self.pk})

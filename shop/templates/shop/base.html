@@ -52,17 +52,25 @@
                             </a>
                         </li>
 
+
+
                         <li class="">
                             <a href="{% url 'shop:my-products' %} ">
-                                <span class="glyphicon glyphicon-user" aria-hidden="true"></span> &nbsp; My Products
+                                <span class="glyphicon glyphicon-book" aria-hidden="true"></span> &nbsp; My Products
                             </a>
                         </li>
 
-                            <li class="">
-                                <a href="{% url 'shop:logout' %}">
-                                    <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> &nbsp; Logout
-                                </a>
-                            </li>
+                        <li class="">
+                            <a href=" {% url 'shop:my-shop' %} ">
+                                <span class="glyphicon glyphicon-user" aria-hidden="true"></span> &nbsp; View Shop Profile
+                            </a>
+                        </li>
+
+                        <li class="">
+                            <a href="{% url 'shop:logout' %}">
+                                <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> &nbsp; Logout
+                            </a>
+                        </li>
                         {% else %}
                             <li class="">
                                 <a href="{% url 'shop:login' %}">
