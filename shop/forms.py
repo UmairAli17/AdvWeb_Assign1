@@ -67,3 +67,6 @@ class AddProductForm(forms.ModelForm):
             'product_desc': forms.Textarea(attrs={'placeholder': 'Enter Product Description Here...', 'class': 'shop-formField'}),
         }
         exclude = ['business']
+
+class ProductSearchForm(forms.Form):
+    search = forms.CharField(required=False)

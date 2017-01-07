@@ -1,8 +1,9 @@
-from .forms import AddProductForm
+from .forms import AddProductForm, ProductSearchForm
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic.list import ListView
 from django.views.generic import View, DetailView
 from django.core.urlresolvers import reverse_lazy
+from django.db.models import Q
 from .models import Product, Shop
 
 
@@ -89,4 +90,21 @@ class UpdateProduct(UpdateView):
 class DeleteProduct(DeleteView):
     model = Product
     success_url = reverse_lazy('shop:my-products')
+
+
+#function based view to search - will convert to CBV if needed - ok as is right now
+
+class SearchList(ListView):
+    model = Product
+    form_class = ProductSearchForm
+    template_name = "shop/product_list_search.html"
+    context_object_name = 'search_list'
+
+    def get_queryset(self):
+        # get the value from the search box
+        search = self.request.GET.get("search")
+        # the following query set will allow the user to search according to product name
+        queryset = Product.objects.filter(Q(product_name__icontains=search))
+        return queryset
+
 

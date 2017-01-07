@@ -43,6 +43,9 @@ urlpatterns = [
     # Show My Shop
     url(r'^shop/profile/$', views.MyShopView.as_view(), name='my-shop'),
 
-    # Show My Shop
+    # Edit My Shop
     url(r'^shop/profile/(?P<pk>[0-9]+)/$', views.EditMyShop.as_view(), name='edit-my-shop'),
+
+    # Search Products
+    url(r'^search/', views.SearchList.as_view(), name='search'),
 ]
