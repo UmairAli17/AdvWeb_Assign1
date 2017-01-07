@@ -1,5 +1,5 @@
 from django.conf.urls import url
-from . import views
+from . import views, user_views
 
 app_name = 'shop'
 
@@ -31,14 +31,14 @@ urlpatterns = [
 
     # register user url
     # 'shop/register'
-    url(r'^register/$', views.RegisterView.as_view(), name='register'),
+    url(r'^register/$', user_views.RegisterView.as_view(), name='register'),
 
     # logs user in
     # 'shop/login'
-    url(r'^login/$', views.LoginView.as_view(), name='login'),
+    url(r'^login/$', user_views.LoginView.as_view(), name='login'),
 
     # log the user out
-    url(r'^logout/$', views.LogoutView.as_view(), name='logout'),
+    url(r'^logout/$', user_views.LogoutView.as_view(), name='logout'),
 
     # Show My Shop
     url(r'^shop/profile/$', views.MyShopView.as_view(), name='my-shop'),

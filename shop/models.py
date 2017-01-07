@@ -10,6 +10,7 @@ from django.core.urlresolvers import reverse
 class Shop(models.Model):
     name = models.CharField(max_length=150)
     owner = models.OneToOneField(User, related_name="owner")
+    description = models.TextField(max_length=5000, default="Default Description. Looks like the Shop Owner hasn't uploaded a description..")
     shop_logo = models.FileField()
 
     def __str__(self):
@@ -22,6 +23,7 @@ class Shop(models.Model):
             up.save()
     post_save.connect(create_shop, sender=User)
 
+    # sets a template property so to output a "default" shop image/ logo
     @property
     def shop_logo_img(self):
         default_path = '/static/shop/images/dft/no-img.png'
@@ -42,6 +44,7 @@ class Product(models.Model):
     business = models.ForeignKey(Shop, on_delete=models.CASCADE, related_name="products")
     product_desc = models.TextField()
     product_image = models.FileField()
+    price = models.DecimalField(max_digits=6, decimal_places=2)
 
     def __str__(self):
         return self.product_name
@@ -50,3 +53,7 @@ class Product(models.Model):
 # a  function that will allow for the viewing of a product
     def get_absolute_url(self):
         return reverse('shop:product-details', kwargs={'pk': self.pk})
+
+    @property
+    def price_format(self):
+        return "£%s" % self.price

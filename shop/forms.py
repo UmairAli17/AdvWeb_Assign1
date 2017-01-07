@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from .models import Product, Shop
+from django.contrib.auth import authenticate
 from django import forms
 
 
@@ -27,6 +28,9 @@ class UserRegForm(forms.ModelForm):
         fields = ['username', 'email', 'password']
 
 
+
+
+
 class UserLogForm(forms.ModelForm):
     class Meta:
         model = User
@@ -36,8 +40,26 @@ class UserLogForm(forms.ModelForm):
         }
         fields = ['username', 'password']
 
+    # FUTURE DEV: Get the form authenticating user from here instead of within view. Quite messy as is right now
+    # def clean(self):
+    #     username = self.cleaned_data.get('username')
+    #     passsword = self.cleaned_data.get('passsword')
+    #     # then we want ot authenticare (login the user)
+    #     user = authenticate(username=username, passsword=passsword)
+    #     if not user:
+    #         raise forms.ValidationError("Incorrect login Credentials! Please try again!")
+    #     return self.cleaned_data
+    #
+    # def login(self, request):
+    #     username = self.cleaned_data.get('username')
+    #     passsword = self.cleaned_data.get('passsword')
+    #     user = authenticate(username=username, passsword=passsword)
+    #     return user
+
+
 class AddProductForm(forms.ModelForm):
     product_image = forms.FileField(label="Upload a Product Image", required=True)
+    price = forms.DecimalField(label="Please Enter A Price")
     class Meta:
         model = Product
         widgets = {

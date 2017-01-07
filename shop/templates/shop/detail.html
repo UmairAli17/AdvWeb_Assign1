@@ -4,22 +4,28 @@
 
 
 {% block main-content %}
-    <div class="col-sm-6 col-md-6 col-lg-6  col-sm-offset-3 col-md-offset-3 col-lg-offset-3 album-det-container">
-    <div class="thumbnail">
-        <!--the .url ensures that whatever is being outputted from the FileField is in the form of an actual URL-->
-        <img src="{{ shop.shoplogo_or_default }}" class="img-responsive">
+
+    <div class="col-sm-12 col-md-8 col-lg-8 col-md-offset-2 col-lg-offset-2">
+        <div class="thumbnail shop-image-small">
+            <img src="{{ shop.shop_logo_img }}"/>
+        </div>
+        <div class="row">
+            <h3>{{ shop.name }}</h3>
+            <p class="owner-emphasis">{{ shop.owner }}</p>
+        </div>
+        <div class="row">
+        <h3>Products Available</h3>
+            <div class="col-sm-4 col-md-2 col-lg-2 col-sm-2 col-md-2 col-lg-12 small-product-box">
+                {% for product in shop.products.all %}
+                    <div class="thumbnail tiny-product-img">
+                        <img src="{{ product.product_image.url }}"/>
+                    </div>
+                    <h5>Product Name:{{ product.product_name }}</h5>
+                    <p>Description: {{ product.product_desc }}</p>
+                    <p>Price: {{ product.price_format }}</p>
+                    <a href="{% url 'shop:product-details' product.id %}"><button type="button" class="btn btn-default">Open Product</button></a>
+                {% endfor %}
+            </div>
+        </div>
     </div>
-    <h1>{{ shop.owner }}</h1>
-        <h1>{{ shop.id }}</h1>
-    <ul>
-
-    </ul>
-    {% if error_message %}
-        <p><strong>{{ error_message }}</strong></p>
-    {% endif %}
-    <h3>Seller Details</h3>
-    {% for shop in shop.products.all %}
-
-        <h5>Product Name:{{ shop.product_name }}</h5>
-    {% endfor %}
 {% endblock %}
