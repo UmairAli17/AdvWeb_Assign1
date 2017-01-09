@@ -18,7 +18,7 @@ urlpatterns = [
     url(r'^product/(?P<pk>[0-9]+)/$', views.ProductDetailView.as_view(), name="product-details"),
 
     # show ALL products
-    url(r'^pruducts/all/', views.AllProducts.as_view(), name="all-products"),
+    url(r'^products/all/', views.AllProducts.as_view(), name="all-products"),
 
     # Show my Products
     url(r'^my-products/', views.MyProducts.as_view(), name='my-products'),

@@ -65,3 +65,12 @@ FORM CSS
        background: inherit;
     border: none;
 }
+
+.emptyResults-box{
+    margin-top: 20%;
+}
+
+
+.emptyResultsTextHeading{
+    text-align: center;
+}

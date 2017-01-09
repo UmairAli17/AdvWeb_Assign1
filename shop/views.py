@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import AddProductForm, ProductSearchForm
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic.list import ListView
@@ -21,7 +22,7 @@ class DetailView(DetailView):
     model = Shop
     template_name = 'shop/detail.html'
 
-class MyShopView(DetailView):
+class MyShopView(LoginRequiredMixin, DetailView):
     template_name = 'shop/my_shop.html'
     context_object_name = 'my_shop'
 
@@ -32,7 +33,7 @@ class MyShopView(DetailView):
         usr_shop = Shop.objects.get(owner=user)
         return usr_shop
 
-class EditMyShop(UpdateView):
+class EditMyShop(LoginRequiredMixin, UpdateView):
     model = Shop
     template_name = 'shop/edit_shop.html'
     fields = ['name', 'description', 'shop_logo']
@@ -48,7 +49,7 @@ class AllProducts(ListView):
     template_name = 'shop/all_products.html'
 
 
-class ProductCreate(CreateView):
+class ProductCreate(LoginRequiredMixin, CreateView):
     model = Product
     form_class = AddProductForm
     template_name = 'shop/add_product.html'
@@ -67,7 +68,7 @@ class ProductCreate(CreateView):
         return super(ProductCreate, self).form_valid(form)
 
 
-class MyProducts(ListView):
+class MyProducts(LoginRequiredMixin, ListView):
     template_name = 'shop/my_products.html'
     context_object_name = 'my_products'
 
@@ -81,13 +82,13 @@ class ProductDetailView(DetailView):
     template_name = 'shop/product_detail.html'
 
 # All for the updating of products
-class UpdateProduct(UpdateView):
+class UpdateProduct(LoginRequiredMixin, UpdateView):
     model = Product
     template_name = 'shop/product_form.html'
     fields = ['product_name', 'product_desc', 'price', 'product_image']
 
 
-class DeleteProduct(DeleteView):
+class DeleteProduct(LoginRequiredMixin, DeleteView):
     model = Product
     success_url = reverse_lazy('shop:my-products')
 
