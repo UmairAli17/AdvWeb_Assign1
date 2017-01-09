@@ -3,6 +3,8 @@
 {% block title %}All Products{% endblock %}
 
 {% block main-content %}
+
+    {% if product_list%}
     {% for product in product_list %}
         <div class="container-fluid">
             <div class="col-sm-4 col-md-4 col-lg-4 album-det-container">
@@ -20,4 +22,9 @@
             </div>
         </div>
     {% endfor %}
+    {% else %}
+    <div class="col-sm-10 col-sm-offset-1 col-md-8 col-lg-8 col-md-offset-2 col-lg-offset-2 emptyResults-box">
+        <h4 class="emptyResultsTextHeading">Doesn't Look like theres any products here! Looks like our sellers need to start adding some..</h4>
+    </div>
+    {% endif %}
 {% endblock %}

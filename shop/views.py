@@ -1,13 +1,10 @@
-from django.views import generic
-from .forms import UserLogForm, AddProductForm, UserRegForm
+from django.contrib.auth.mixins import LoginRequiredMixin
+from .forms import AddProductForm, ProductSearchForm
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic.list import ListView
-from django.views.generic import View
+from django.views.generic import View, DetailView
 from django.core.urlresolvers import reverse_lazy
-from django.shortcuts import render
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.views import logout
-from django.http import HttpResponseRedirect
+from django.db.models import Q
 from .models import Product, Shop
 
 
@@ -21,20 +18,38 @@ class IndexView(ListView):
         return Shop.objects.all()
 
 
-class DetailView(generic.DetailView):
+class DetailView(DetailView):
     model = Shop
     template_name = 'shop/detail.html'
 
+class MyShopView(LoginRequiredMixin, DetailView):
+    template_name = 'shop/my_shop.html'
+    context_object_name = 'my_shop'
+
+    # get the current user's shop and pass that into the object
+    def get_object(self, queryset=None):
+        # get the current user's shop
+        user = self.request.user.id
+        usr_shop = Shop.objects.get(owner=user)
+        return usr_shop
+
+class EditMyShop(LoginRequiredMixin, UpdateView):
+    model = Shop
+    template_name = 'shop/edit_shop.html'
+    fields = ['name', 'description', 'shop_logo']
+
+
+
 # PRODUCT VIEWS
 
-# Show ALL Products
+# Show ALL Products:
 
 class AllProducts(ListView):
     model = Product
     template_name = 'shop/all_products.html'
 
 
-class ProductCreate(CreateView):
+class ProductCreate(LoginRequiredMixin, CreateView):
     model = Product
     form_class = AddProductForm
     template_name = 'shop/add_product.html'
@@ -53,7 +68,7 @@ class ProductCreate(CreateView):
         return super(ProductCreate, self).form_valid(form)
 
 
-class MyProducts(ListView):
+class MyProducts(LoginRequiredMixin, ListView):
     template_name = 'shop/my_products.html'
     context_object_name = 'my_products'
 
@@ -67,83 +82,30 @@ class ProductDetailView(DetailView):
     template_name = 'shop/product_detail.html'
 
 # All for the updating of products
-class UpdateProduct(UpdateView):
+class UpdateProduct(LoginRequiredMixin, UpdateView):
     model = Product
     template_name = 'shop/product_form.html'
-    fields = ['product_name', 'product_desc', 'product_image']
+    fields = ['product_name', 'product_desc', 'price', 'product_image']
 
 
-class DeleteProduct(DeleteView):
+class DeleteProduct(LoginRequiredMixin, DeleteView):
     model = Product
     success_url = reverse_lazy('shop:my-products')
 
 
-# USER AUTH VIEWS
+#function based view to search - will convert to CBV if needed - ok as is right now
+
+class SearchList(ListView):
+    model = Product
+    form_class = ProductSearchForm
+    template_name = "shop/product_list_search.html"
+    context_object_name = 'search_list'
+
+    def get_queryset(self):
+        # get the value from the search box
+        search = self.request.GET.get("search")
+        # the following query set will allow the user to search according to product name
+        queryset = Product.objects.filter(Q(product_name__icontains=search))
+        return queryset
 
 
-class RegisterView(CreateView):
-     form_class = UserRegForm
-     template_name = 'shop/registration_form.html'
-
-     #display the template when this view is called - when the user requests the page itself
-     def get(self, request):
-         #display the form - None ensures that there won't be any data in it.. yet
-         form = self.form_class(None)
-         return render(request, self.template_name, {'form': form})
-
-     def post(self, request):
-         form = self.form_class(request.POST)
-
-         if form.is_valid():
-             user = form.save(commit=False)
-
-             username = form.cleaned_data['username']
-             password = form.cleaned_data['password']
-
-             user.set_password(password)
-             user.save()
-
-             user = authenticate(username=username, password=password)
-
-             if user is not None:
-                 if user.is_active:
-                     login(request, user)
-                     return HttpResponseRedirect('/shop/')
-                 else:
-                     return HttpResponseRedirect('/shop/')
-
-         return render(request, self.template_name, {'form': form})
-
-
-class LoginView(View):
-    form_class = UserLogForm
-    template_name = 'shop/login.html'
-
-    def get(self, request):
-        form = self.form_class(None)
-        return render(request, self.template_name, {'form': form})
-
-    def post(self, request):
-        # wrap the form text boxes in variables
-        username = request.POST['username']
-        password = request.POST['password']
-        # assign a variable to the function that authenticates the user
-        user = authenticate(username=username, password=password)
-
-        # if the user exists
-        if user is not None:
-            if user.is_active:
-                login(request, user)
-                return HttpResponseRedirect('/shop/')
-            else:
-                # if user is not active, ask to logon again
-                return HttpResponseRedirect('/shop/login')
-
-        return HttpResponseRedirect('/shop/login')
-
-
-class LogoutView(View):
-
-    def get(self, request):
-        logout(request)
-        return HttpResponseRedirect('/shop/')

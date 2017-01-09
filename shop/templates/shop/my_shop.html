@@ -1,0 +1,9 @@
+<!--Make sure this html file extends the base.html file template-->
+{% extends 'shop/base.html' %}
+{% block title %}My Shop{% endblock%}
+
+
+{% block main-content %}
+    <h1>MY Shop: {{ my_shop.owner }}</h1>
+    <p><a href="{% url 'shop:edit-my-shop' my_shop.id %}" >Click here to Edit the shop</a></p>
+{% endblock %}

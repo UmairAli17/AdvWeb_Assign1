@@ -5,13 +5,16 @@
     {% if my_products %}
         <div class="col-sm-12 col-md-10 col-lg-10 col-md-offset-1 col-lg-offset-1">
         {% for my in my_products %}
-            <div class="col-sm-4 col-md-4 col-lg-4">
+            <h3>Welcome, {{ user }}</h3>
+            <div class="card-container">
+                <div class="thumbnail card-image">
+                    <img src="{{ my.product_image.url }}"/>
+                </div>
                 <h3>{{ my.product_name }}</h3>
 
                 <a href="{% url 'shop:update-product' my.id %}">
                     <button type="submit" class="btn btn-default">
-                        <span class="glyphicon glyphicon-pencil"> Edit
-                        </span>
+                        <span class="glyphicon glyphicon-pencil"></span>
                     </button>
                 </a>
 
@@ -30,6 +33,8 @@
         {% endfor %}
         </div>
     {% else %}
-<4>I'm Sorry! You haven't got any products! :( How About Adding Some Through <a href="{% url 'shop:product-add' %}">Here?</a></h4>
+    <div class="col-sm-10 col-sm-offset-1 col-md-8 col-lg-8 col-md-offset-2 col-lg-offset-2 emptyResults-box">
+        <h4 class="emptyResultsTextHeading">I'm Sorry! You haven't got any products! :( How About Adding Some Through <a href="{% url 'shop:add-product' %}">Here?</a></h4>
+     </div>
     {% endif %}
 {% endblock %}

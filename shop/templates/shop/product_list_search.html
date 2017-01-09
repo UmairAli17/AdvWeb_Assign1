@@ -1,0 +1,22 @@
+{% extends 'shop/base.html' %}
+{% block title %}Searched{% endblock %}
+
+{% block main-content %}
+    {% for search in search_list %}
+        <div class="container-fluid">
+            <div class="col-sm-4 col-md-4 col-lg-4 album-det-container">
+                <!--Album Image-->
+                <div class="thumbnail">
+                    <!--the .url ensures that whatever is being outputted from the FileField is in the form of an actual URL-->
+                   <img src="{{ search.product_image.url }}" class="img-responsive">
+                </div>
+                <div class="caption">
+                    <h1>Product Name</h1>
+                    <h3>{{ search.product_name }}</h3>
+                </div>
+
+                <a href="{% url 'shop:product-details' search.id %}"><button type="button" class="btn btn-default">View Details</button></a>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}

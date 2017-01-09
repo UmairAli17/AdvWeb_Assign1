@@ -1,0 +1,75 @@
+
+
+
+
+/*
+FORM CSS
+*/
+
+.form-header{
+    text-align: center;
+}
+
+
+.center-form{
+    height: 100%;
+    margin-top: 50%;
+}
+
+
+.shop-formField{
+    border: solid 1px;
+    padding: 5%;
+    border-radius: .25em;
+    margin: 5%;
+}
+
+.control-label{
+    display: none;
+}
+
+
+.shop-card-container{
+    -webkit-box-shadow: 1px 2px 5px 2px rgba(0,0,0,0.26);
+    -moz-box-shadow: 1px 2px 5px 2px rgba(0,0,0,0.26);
+    box-shadow: 1px 2px 5px 2px rgba(0,0,0,0.26);
+    padding: .5em;
+    width: 24%;
+    float:left;
+    margin: 1%;
+ }
+
+.card-image-small{
+    border: none;
+    max-width: 75%;
+    margin-left: 12.5%;
+}
+
+
+.owner-emphasis{
+    font-weight: bold;
+    font-size: 1.5em;
+}
+
+.card-image-small{
+    border: none;
+    max-width: 75%;
+    margin-left: 12.5%;
+}
+
+
+
+.small-product-box{
+    border: solid 1px #eee;
+    padding-bottom:1.5em;
+    border-radius: .5em;
+    background: #eee;
+}
+
+.tiny-product-img{
+    max-width: 70%;
+    margin-top: 1.5em;
+    margin-left: 15%;
+       background: inherit;
+    border: none;
+}
