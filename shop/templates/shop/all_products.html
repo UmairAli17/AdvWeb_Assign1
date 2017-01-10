@@ -6,21 +6,20 @@
 
     {% if product_list%}
     {% for product in product_list %}
-        <div class="container-fluid">
-            <div class="col-sm-4 col-md-4 col-lg-4 album-det-container">
+            <div class="col-sm-4 col-md-4 col-lg-4 productDetails-container">
                 <!--Album Image-->
+                <h3>{{ product.product_name }}</h3>
                 <div class="thumbnail">
                     <!--the .url ensures that whatever is being outputted from the FileField is in the form of an actual URL-->
                    <img src="{{ product.product_image.url }}" class="img-responsive">
                 </div>
-                <div class="caption">
-                    <h1>Product Name</h1>
-                    <h3>{{ product.product_name }}</h3>
-                </div>
+                    <p>{{ product.created }}</p>
+                    <h4 style="text-align:right;">{{ product.price_format }}</h4>
+                        <a href="{% url 'shop:product-details' product.id %}"><button type="button" class="btn btn-default pull-right">View Product</button></a>
+                    <hr>
+                    <h2>Seller: {{ product.business.name }}</h2>
 
-                <a href="{% url 'shop:product-details' product.id %}"><button type="button" class="btn btn-default">View Details</button></a>
             </div>
-        </div>
     {% endfor %}
     {% else %}
     <div class="col-sm-10 col-sm-offset-1 col-md-8 col-lg-8 col-md-offset-2 col-lg-offset-2 emptyResults-box">

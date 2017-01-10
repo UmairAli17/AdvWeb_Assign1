@@ -15,7 +15,17 @@ class UserRegForm(forms.ModelForm):
             raise forms.ValidationError("Your passwords do not match!")
         return self.data['password']
 
+    def check_username(self):
+        # get all current usernames withint he database
+        user = User.objects.filter(username=self.cleaned_data['username'])
+        # if the above user instance returns true then performt he following:
+        if user:
+            raise forms.ValidationError("That Username already exists! Please choose a different one.")
+        return self.data['username']
+
+
     def clean(self, *args, **kwargs):
+        self.check_username()
         self.clean_passwords()
         return super(UserRegForm, self).clean()
 
@@ -57,6 +67,18 @@ class UserLogForm(forms.ModelForm):
     #     return user
 
 
+class EditShopForm(forms.ModelForm):
+    shop_logo = forms.FileField(label="Please Select a Shop Logo.", required=True)
+    class Meta:
+        model = Shop
+        widgets = {
+            'name': forms.TextInput(attrs={'placeholder': 'Enter Shop Name','class': 'shop-formField'}),
+            'description': forms.Textarea(attrs={'placeholder': 'Enter Shop Description Here...', 'class': 'shop-formField'}),
+        }
+        exclude = ['owner']
+        fields = ['name', 'description', 'shop_logo']
+
+
 class AddProductForm(forms.ModelForm):
     product_image = forms.FileField(label="Upload a Product Image", required=True)
     price = forms.DecimalField(label="Please Enter A Price")
@@ -66,7 +88,7 @@ class AddProductForm(forms.ModelForm):
             'product_name': forms.TextInput(attrs={'placeholder': 'Enter Product Name', 'class': 'shop-formField'}),
             'product_desc': forms.Textarea(attrs={'placeholder': 'Enter Product Description Here...', 'class': 'shop-formField'}),
         }
-        exclude = ['business']
+        exclude = ['business', 'created']
 
 class ProductSearchForm(forms.Form):
     search = forms.CharField(required=False)

@@ -2,8 +2,9 @@
 {% block title %}Searched{% endblock %}
 
 {% block main-content %}
+    {% if search_list %}
+    <p class="alert alert-success resultsSearchValue">You searched for: {{ request.GET.search }}</p>
     {% for search in search_list %}
-        <div class="container-fluid">
             <div class="col-sm-4 col-md-4 col-lg-4 album-det-container">
                 <!--Album Image-->
                 <div class="thumbnail">
@@ -17,6 +18,11 @@
 
                 <a href="{% url 'shop:product-details' search.id %}"><button type="button" class="btn btn-default">View Details</button></a>
             </div>
-        </div>
     {% endfor %}
+    {% else %}
+        <div class="col-sm-10 col-sm-offset-1 col-md-8 col-lg-8 col-md-offset-2 col-lg-offset-2 emptyResults-box">
+            <h4 class="emptyResultsTextHeading">No results found matching your input.. maybe try something else?</h4>
+        </div>
+    {% endif %}
+
 {% endblock %}

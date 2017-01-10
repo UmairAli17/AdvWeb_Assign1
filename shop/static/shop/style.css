@@ -56,6 +56,7 @@ FORM CSS
     padding-bottom:1.5em;
     border-radius: .5em;
     background: #eee;
+    margin-right: .5em;
 }
 
 .tiny-product-img{
@@ -73,4 +74,43 @@ FORM CSS
 
 .emptyResultsTextHeading{
     text-align: center;
+}
+
+.alert-danger{
+    text-align:center;
+}
+
+.resultsSearchValue{
+    margin-left: 1em;
+    font-size: 1.5em;
+    width: 60%;
+}
+
+.job-nav{
+    background: #eee;
+    border: none;
+}
+
+.navbar-inverse .navbar-nav>li>a:hover{
+    color: #007faf;
+    font-weight:bold;
+}
+
+.searchBox{
+    border: none;
+    border-radius: 0;
+    background-color: inherit;
+    padding: 1%;
+    border-bottom: solid 2px #007faf;
+    text-indent: 1.9em;
+}
+.none{
+    display: none;
+}
+
+.productDetails-container{
+    border: solid 1px #eee;
+    background: #f7f7f7;
+    padding: 1em;
+    margin: 1em;
 }

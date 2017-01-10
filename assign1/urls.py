@@ -11,7 +11,7 @@ urlpatterns = [
     # so the root will direct directly to the shop app
     url(r'^$', lambda r: HttpResponseRedirect('shop/')),
     url(r'^admin/', admin.site.urls),
-    url(r'^shop/', include('shop.urls'))
+    url(r'^shop/', include('shop.urls')),
 ]
 
 # Whenever we are in dev mode, use the following settings for uploading of files/ images

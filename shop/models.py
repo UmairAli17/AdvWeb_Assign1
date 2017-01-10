@@ -45,15 +45,17 @@ class Product(models.Model):
     product_desc = models.TextField()
     product_image = models.FileField()
     price = models.DecimalField(max_digits=6, decimal_places=2)
+    created = models.DateTimeField(auto_now_add=True, blank=True)
 
     def __str__(self):
         return self.product_name
 
 
-# a  function that will allow for the viewing of a product
+    # a method that will allow for the viewing of a product
     def get_absolute_url(self):
         return reverse('shop:product-details', kwargs={'pk': self.pk})
 
+    # method that appends a £ sign before the price value in the template
     @property
     def price_format(self):
         return "£%s" % self.price

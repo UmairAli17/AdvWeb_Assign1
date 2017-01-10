@@ -11,7 +11,7 @@
     </head>
 
     <body>
-        <nav class="navbar navbar-inverse">
+        <nav class="navbar navbar-inverse job-nav">
             <div class="container-fluid">
                 <!--Logo-->
                 <div class="navbar-header">
@@ -39,60 +39,65 @@
                     </ul>
                     <form class="navbar-form navbar-left" role="search" method="get" action="{% url 'shop:search' %}">
                         <div class="form-group">
-                            <input type="text" class="form-control" name="search" value="" placeholder="Search here...">
-                            <button type="submit" class="btn btn-default">Search</button>
+                            <input type="text" class="form-control searchBox" name="search" value="" placeholder="Search here...">
+                            <button type="submit" class="btn btn-default none">Search</button>
                         </div>
                     </form>
                     <ul class="nav navbar-nav navbar-right">
                     {% if user.is_authenticated %}
-
-                        <li class="">
-                            <a href="{% url 'shop:add-product' %} ">
-                                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> &nbsp; Add Products
-                            </a>
-                        </li>
-
-
-
-                        <li class="">
-                            <a href="{% url 'shop:my-products' %} ">
-                                <span class="glyphicon glyphicon-book" aria-hidden="true"></span> &nbsp; My Products
-                            </a>
-                        </li>
-
-                        <li class="">
-                            <a href=" {% url 'shop:my-shop' %} ">
-                                <span class="glyphicon glyphicon-user" aria-hidden="true"></span> &nbsp; View Shop Profile
-                            </a>
-                        </li>
-
-                        <li class="">
-                            <a href="{% url 'shop:logout' %}">
-                                <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> &nbsp; Logout
-                            </a>
-                        </li>
-                        {% else %}
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{user}} <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                              <li class="">
+                                <a href="{% url 'shop:add-product' %} ">
+                                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> &nbsp; Add Products
+                                </a>
+                            </li>
                             <li class="">
-                                <a href="{% url 'shop:login' %}">
-                                    <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span> &nbsp; Login
+                                <a href="{% url 'shop:my-products' %} ">
+                                    <span class="glyphicon glyphicon-book" aria-hidden="true"></span> &nbsp; My Products
                                 </a>
                             </li>
 
                             <li class="">
+                                <a href=" {% url 'shop:my-shop' %} ">
+                                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span> &nbsp; View Shop Profile
+                                </a>
+                            </li>
+
+                            <li class="">
+                                <a href="{% url 'shop:logout' %}">
+                                    <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> &nbsp; Logout
+                                </a>
+                            </li>
+                            {% else %}
+                                <li class="">
+                                    <a href="{% url 'shop:login' %}">
+                                        <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span> &nbsp; Login
+                                    </a>
+                                </li>
+
+                                <li class="">
                                 <a href="{% url 'shop:register' %}">
                                     <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span> &nbsp; Register
                                 </a>
                             </li>
-                        {% endif %}
+                        </ul>
+                      </li>
+                    {% endif %}
                     </ul>
                 </div>
             </div>
         </nav>
+        <div class="container-fluid">
             {% block main-content %}
 
             {% endblock %}
+        </div>
         <!--Include the JS Files-->
         <script src="https://code.jquery.com/jquery-3.1.1.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     </body>
 </html>
+
+
