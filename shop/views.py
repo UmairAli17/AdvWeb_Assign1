@@ -37,8 +37,6 @@ class EditMyShop(LoginRequiredMixin, UpdateView):
     model = Shop
     template_name = 'shop/edit_shop.html'
     form_class = EditShopForm
-    fields = ['name', 'description']
-
 
 
 # PRODUCT VIEWS

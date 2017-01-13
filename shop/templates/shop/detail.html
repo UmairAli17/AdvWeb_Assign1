@@ -4,12 +4,8 @@
 
 
 {% block main-content %}
-<<<<<<< HEAD
 
     <div class="col-sm-12 col-md-8 col-lg-8 col-md-offset-2 col-lg-offset-2">
-        <div class="thumbnail shop-image-small">
-            <img src="{{ shop.shop_logo_img }}"/>
-        </div>
         <div class="row">
             <h3>{{ shop.name }}</h3>
             <p class="owner-emphasis">{{ shop.name }}</p>
@@ -18,36 +14,13 @@
         <h3>Products Available</h3>
 
             {% for product in shop.products.all %}
-            <div class="col-sm-4 col-md-2 col-lg-2 col-sm-2 col-md-2 col-lg-2 small-product-box">
-                    <img class="thumbnail tiny-product-img" src="{{ product.product_image.url }}"/>
-                    <h5>Product Name:{{ product.product_name }}</h5>
-                    <p>Description: {{ product.product_desc|slice:":35" }}</p>
-                    <p>Price: {{ product.price_format }}</p>
-                    <a href="{% url 'shop:product-details' product.id %}"><button type="button" class="btn btn-default">View Product</button></a>
-            </div>
+                <div class="col-sm-4 col-md-2 col-lg-2 col-sm-2 col-md-2 col-lg-2 small-product-box">
+                        <img class="thumbnail tiny-product-img" src="{{ product.product_image.url }}"/>
+                        <h5>Product Name:{{ product.product_name }}</h5>
+                        <p>Description: {{ product.product_desc|slice:":35" }}</p>
+                        <p>Price: {{ product.price_format }}</p>
+                        <a href="{% url 'shop:product-details' product.id %}"><button type="button" class="btn btn-default">View Product</button></a>
+                </div>
             {% endfor %}
 
-=======
-
-    <div class="col-sm-12 col-md-8 col-lg-8 col-md-offset-2 col-lg-offset-2">
-        <div class="row">
-            <h3>{{ shop.name }}</h3>
-            <p class="owner-emphasis">{{ shop.owner }}</p>
-        </div>
-        <div class="row">
-        <h3>Products Available</h3>
-            <div class="col-sm-4 col-md-2 col-lg-2 col-sm-2 col-md-2 col-lg-12 small-product-box">
-                {% for product in shop.products.all %}
-                    <div class="thumbnail tiny-product-img">
-                        <img src="{{ product.product_image.url }}"/>
-                    </div>
-                    <h5>Product Name:{{ product.product_name }}</h5>
-                    <p>Description: {{ product.product_desc }}</p>
-                    <p>Price: {{ product.price_format }}</p>
-                    <a href="{% url 'shop:product-details' product.id %}"><button type="button" class="btn btn-default">Open Product</button></a>
-                {% endfor %}
-            </div>
->>>>>>> search
-        </div>
-    </div>
 {% endblock %}

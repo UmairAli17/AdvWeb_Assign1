@@ -5,10 +5,6 @@
     {% if my_products %}
         <h3 style=text-align:center;">Welcome, {{ user }}</h3>
         {% for my in my_products %}
-<<<<<<< HEAD
-=======
-            <h3>Welcome, {{ user }}</h3>
->>>>>>> search
             <div class="card-container">
                 <div class="thumbnail card-image">
                     <img src="{{ my.product_image.url }}"/>
@@ -21,15 +17,6 @@
                         </button>
                     </a>
 
-<<<<<<< HEAD
-                    <!--Delete Button-->
-=======
-                <a href="{% url 'shop:update-product' my.id %}">
-                    <button type="submit" class="btn btn-default">
-                        <span class="glyphicon glyphicon-pencil"></span>
-                    </button>
-                </a>
->>>>>>> search
 
                     <form action="{% url 'shop:delete-product' my.id %}" method="post">
                         {% csrf_token %}

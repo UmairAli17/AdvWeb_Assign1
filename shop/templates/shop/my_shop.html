@@ -1,26 +1,15 @@
 <!--Make sure this html file extends the base.html file template-->
 {% extends 'shop/base.html' %}
-<<<<<<< HEAD
 {% block title %}My Shop: {{ my_shop.name }}{% endblock%}
 
 
 {% block main-content %}
     <div class="col-sm-12 col-md-6 col-lg-6 col-md-offset-3 col-lg-offset-3">
         <div class="shop-profile">
-            <img class="thumbnail" src="{{ my_shop.shop_logo_img }}">
             <h3>Shop Name: {{ my_shop.name }}</h3>
             <p>{{ my_shop.description }}</p>
             <hr>
             <p><a href="{% url 'shop:edit-my-shop' my_shop.id %}" >Click here to Edit the shop</a></p>
         </div>
     </div>
-
-=======
-{% block title %}My Shop{% endblock%}
-
-
-{% block main-content %}
-    <h1>MY Shop: {{ my_shop.owner }}</h1>
-    <p><a href="{% url 'shop:edit-my-shop' my_shop.id %}" >Click here to Edit the shop</a></p>
->>>>>>> search
 {% endblock %}
