@@ -1,5 +1,5 @@
 {% extends 'shop/base.html' %}
-{% block title %}Searched{% endblock %}
+{% block title %}Search results: {{ request.GET.search }}{% endblock %}
 
 {% block main-content %}
     {% if search_list %}
