@@ -8,8 +8,8 @@ class UserRegForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Enter a Password Here', 'class': 'shop-formField'}))
     conf_password = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Confirm Password Here', 'class': 'shop-formField'}))
 
-    # create the below function, this checks the currently submitted data and checks whether the password field matches the
-    # confirm password field
+    # create the below function, this checks the currently submitted data and checks whether the password field
+    # matches the confirm password field
     def clean_passwords(self):
         if self.cleaned_data['password'] != self.cleaned_data['conf_password']:
             raise forms.ValidationError("Your passwords do not match!")
@@ -38,9 +38,6 @@ class UserRegForm(forms.ModelForm):
         fields = ['username', 'email', 'password']
 
 
-
-
-
 class UserLogForm(forms.ModelForm):
     class Meta:
         model = User
@@ -49,22 +46,6 @@ class UserLogForm(forms.ModelForm):
             'password': forms.PasswordInput(attrs={'placeholder': 'Password', 'class': 'shop-formField'}),
         }
         fields = ['username', 'password']
-
-    # FUTURE DEV: Get the form authenticating user from here instead of within view. Quite messy as is right now
-    # def clean(self):
-    #     username = self.cleaned_data.get('username')
-    #     passsword = self.cleaned_data.get('passsword')
-    #     # then we want ot authenticare (login the user)
-    #     user = authenticate(username=username, passsword=passsword)
-    #     if not user:
-    #         raise forms.ValidationError("Incorrect login Credentials! Please try again!")
-    #     return self.cleaned_data
-    #
-    # def login(self, request):
-    #     username = self.cleaned_data.get('username')
-    #     passsword = self.cleaned_data.get('passsword')
-    #     user = authenticate(username=username, passsword=passsword)
-    #     return user
 
 
 class EditShopForm(forms.ModelForm):
@@ -93,3 +74,7 @@ class AddProductForm(forms.ModelForm):
 
 class ProductSearchForm(forms.Form):
     search = forms.CharField(required=False)
+
+
+
+
