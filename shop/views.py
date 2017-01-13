@@ -1,5 +1,9 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+<<<<<<< HEAD
 from .forms import AddProductForm, ProductSearchForm, EditShopForm
+=======
+from .forms import AddProductForm, ProductSearchForm
+>>>>>>> search
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic.list import ListView
 from django.views.generic import View, DetailView
@@ -36,7 +40,11 @@ class MyShopView(LoginRequiredMixin, DetailView):
 class EditMyShop(LoginRequiredMixin, UpdateView):
     model = Shop
     template_name = 'shop/edit_shop.html'
+<<<<<<< HEAD
     form_class = EditShopForm
+=======
+    fields = ['name', 'description']
+>>>>>>> search
 
 
 
@@ -93,6 +101,11 @@ class DeleteProduct(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy('shop:my-products')
 
 
+<<<<<<< HEAD
+=======
+#function based view to search - will convert to CBV if needed - ok as is right now
+
+>>>>>>> search
 class SearchList(ListView):
     model = Product
     form_class = ProductSearchForm
@@ -103,7 +116,11 @@ class SearchList(ListView):
         # get the value from the search box
         search = self.request.GET.get("search")
         # the following query set will allow the user to search according to product name
+<<<<<<< HEAD
         queryset = Product.objects.filter(Q(product_name__icontains=search)).distinct
+=======
+        queryset = Product.objects.filter(Q(product_name__icontains=search))
+>>>>>>> search
         return queryset
 
 

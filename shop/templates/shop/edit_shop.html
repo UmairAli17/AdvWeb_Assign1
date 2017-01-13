@@ -1,5 +1,6 @@
 <!--Make sure this html file extends the base.html file template-->
 {% extends 'shop/base.html' %}
+<<<<<<< HEAD
 {% block title %}Add Product{% endblock %}
 
 {% block main-content %}
@@ -19,4 +20,28 @@
             </form>
         </div>
     </div>
+=======
+{% block title %}Edit Shop{% endblock %}
+
+{% block main-content %}
+<div class="container-fluid">
+    <div class="row">
+        <h2>Edit Shop</h2>
+        {% if error_message %}
+            <p><strong>{{ error_message }}</strong></p>
+        {% endif %}
+        <div class="col-sm-12 col-md-12 col-lg-12">
+            <form class="col-sm-4 col-md-4 col-lg-4" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {% include 'shop/form-template.html' %}
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10 col-md-offset-2 col-md-10 col-ld-offset-2 col-lg-10">
+                        <button type="submit" class="btn btn-success">Sumbit</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+>>>>>>> search
 {% endblock %}

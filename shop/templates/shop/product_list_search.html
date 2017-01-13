@@ -1,10 +1,18 @@
 {% extends 'shop/base.html' %}
+<<<<<<< HEAD
 {% block title %}Search results: {{ request.GET.search }}{% endblock %}
 
 {% block main-content %}
     {% if search_list %}
     <p class="alert alert-success resultsSearchValue">You searched for: {{ request.GET.search }}</p>
     {% for search in search_list %}
+=======
+{% block title %}Searched{% endblock %}
+
+{% block main-content %}
+    {% for search in search_list %}
+        <div class="container-fluid">
+>>>>>>> search
             <div class="col-sm-4 col-md-4 col-lg-4 album-det-container">
                 <!--Album Image-->
                 <div class="thumbnail">
@@ -18,6 +26,7 @@
 
                 <a href="{% url 'shop:product-details' search.id %}"><button type="button" class="btn btn-default">View Details</button></a>
             </div>
+<<<<<<< HEAD
     {% endfor %}
     {% else %}
         <div class="col-sm-10 col-sm-offset-1 col-md-8 col-lg-8 col-md-offset-2 col-lg-offset-2 emptyResults-box">
@@ -25,4 +34,8 @@
         </div>
     {% endif %}
 
+=======
+        </div>
+    {% endfor %}
+>>>>>>> search
 {% endblock %}
