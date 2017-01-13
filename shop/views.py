@@ -36,7 +36,7 @@ class MyShopView(LoginRequiredMixin, DetailView):
 class EditMyShop(LoginRequiredMixin, UpdateView):
     model = Shop
     template_name = 'shop/edit_shop.html'
-    fields = ['name', 'description', 'shop_logo']
+    fields = ['name', 'description']
 
 
 

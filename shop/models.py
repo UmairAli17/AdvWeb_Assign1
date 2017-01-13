@@ -11,7 +11,6 @@ class Shop(models.Model):
     name = models.CharField(max_length=150)
     owner = models.OneToOneField(User, related_name="owner")
     description = models.TextField(max_length=5000, default="Default Description. Looks like the Shop Owner hasn't uploaded a description..")
-    shop_logo = models.FileField()
 
     def __str__(self):
         return str(self.id)
