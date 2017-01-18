@@ -128,7 +128,7 @@ class UpdateProduct(LoginRequiredMixin, UpdateView):
 class DeleteProduct(LoginRequiredMixin, DeleteView):
     # this will get the product model for that product
     model = Product
-    # once successfulyl deleted, redirect back to same page
+    # once successfully deleted, redirect back to same page
     success_url = reverse_lazy('shop:my-products')
 
 # The view that allows the user to search through a model which in this case is the Product model
