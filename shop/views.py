@@ -23,10 +23,9 @@ class IndexView(ListView):
     def get_queryset(self):
         return Shop.objects.all()
 
-# the view that allows for the viewing a shop's details including any products it has. It uses the DetailView CBV for
-# displaying a single object's details along with any related data that can be accessed through overriding the
-# get_queryset or get_object methods - or in the template
+# Show the shop's details 
 class DetailView(DetailView):
+    # Attach the product model to this View
     model = Shop
     template_name = 'shop/detail.html'
 
@@ -41,7 +40,6 @@ class MyShopView(LoginRequiredMixin, DetailView):
         user = self.request.user.id
         # get the user_shop where the owner is the current logged in user
         usr_shop = Shop.objects.get(owner=user)
-        # return the above result
         return usr_shop
 
 # the view that allows the user to edit their own shop
@@ -53,9 +51,9 @@ class EditMyShop(LoginRequiredMixin, UpdateView):
 
 # PRODUCT VIEWS
 
-# Show ALL Products. CBV ListView for displaying multiple object models (results):
+# show all products
 class AllProducts(ListView):
-    # the model - it will allow for the listing of ALL products that have been uploaded by the users
+    # Attach the product model to this View
     model = Product
     # the template that is used to display the products
     template_name = 'shop/all_products.html'
@@ -123,11 +121,8 @@ class SearchList(ListView):
         # get the value from the search box
         search = self.request.GET.get("search")
         # if there is a value in the search box, run the below query.
-        #  this is needed because I've set the search box required value to "False" in the form class
         if search:
-            # the following query set will allow the user to search according to product name
-            # distinct ensures that there are no duplicate entries
-            # icontains gets a value
+            # the following query set will allow the user to search according to product name, distinict will ensure there are no duplicate results
             queryset = Product.objects.filter(Q(product_name__icontains=search)).distinct
             return queryset
         else:
