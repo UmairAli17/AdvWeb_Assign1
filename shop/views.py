@@ -27,16 +27,12 @@ class IndexView(ListView):
 # displaying a single object's details along with any related data that can be accessed through overriding the
 # get_queryset or get_object methods - or in the template
 class DetailView(DetailView):
-    # use the shop model
     model = Shop
-    # template to display the details
     template_name = 'shop/detail.html'
 
 # the view that allows the user to access their own shop
 class MyShopView(LoginRequiredMixin, DetailView):
-    # the template that will display the current user's shop "profile"
     template_name = 'shop/my_shop.html'
-    # custom object for the query. used in the foreach loop
     context_object_name = 'my_shop'
 
     # get the current user's shop and pass that into the object
@@ -50,11 +46,8 @@ class MyShopView(LoginRequiredMixin, DetailView):
 
 # the view that allows the user to edit their own shop
 class EditMyShop(LoginRequiredMixin, UpdateView):
-    # get the shop model
     model = Shop
-    #the view will get the cuirrent user's shop through the id that is passed throught he url
     template_name = 'shop/edit_shop.html'
-    # the formclass used for validation
     form_class = EditShopForm
 
 
@@ -69,16 +62,12 @@ class AllProducts(ListView):
 
 # create a product and assign the current logged in user.
 class ProductCreate(LoginRequiredMixin, CreateView):
-    # the model that will allow for the user to create a product
     model = Product
-    # the form class that will run all the custom validation
     form_class = AddProductForm
-    # the template where the form will be displayed
     template_name = 'shop/add_product.html'
 
     # if the form is valid then..
     def form_valid(self, form):
-        # start a new product instance
         new_product = form.save(commit=False)
         # get current logged in user
         user = self.request.user.id
@@ -88,23 +77,17 @@ class ProductCreate(LoginRequiredMixin, CreateView):
         new_product.business = s
         # save the product to the database
         new_product.save()
-        # This method is called when valid form data has been POSTed.
-        # It should return an HttpResponse.
         return super(ProductCreate, self).form_valid(form)
 
 # View that shows all the products the current user has added. Uses ListView CBV
 class MyProducts(LoginRequiredMixin, ListView):
-    # the template that is used to display the user's current products
     template_name = 'shop/my_products.html'
-    # a custom name for the object for easier readability
     context_object_name = 'my_products'
 
     def get_queryset(self):
-        # get the current logged in user's id
         user = self.request.user.id
         # run a query that searches for any product which belongs to a shop where the user is the owner
         queryset = Product.objects.filter(business__owner=user)
-        # return results
         return queryset
 
 # Shows the product details
@@ -115,31 +98,23 @@ class ProductDetailView(DetailView):
 
 # All for the updating of products
 class UpdateProduct(LoginRequiredMixin, UpdateView):
-    # this will get the product model for that product so that it can be updated
     model = Product
-    # specifies the template that the user will redirected to
     template_name = 'shop/product_form.html'
-    # the fields that need to be displayed on the update product form
     fields = ['product_name', 'product_desc', 'price', 'product_image']
 
 
 # Allows for the deleting of products. DeleteView is a CBV that allows for one to do this and to set a success url once
 #  it is deleted
 class DeleteProduct(LoginRequiredMixin, DeleteView):
-    # this will get the product model for that product
     model = Product
     # once successfully deleted, redirect back to same page
     success_url = reverse_lazy('shop:my-products')
 
 # The view that allows the user to search through a model which in this case is the Product model
 class SearchList(ListView):
-    # use the Product Model
     model = Product
-    # set the formclass
     form_class = ProductSearchForm
-    # the below template displays all results
     template_name = "shop/product_list_search.html"
-    # set a custom object name
     context_object_name = 'search_list'
 
     # the following is what allows for the accessing of the value within the search box. it is a "get_queryset" as
@@ -156,7 +131,6 @@ class SearchList(ListView):
             queryset = Product.objects.filter(Q(product_name__icontains=search)).distinct
             return queryset
         else:
-            # display an error message if they havent 
             messages.error(self.request, '')
 
 

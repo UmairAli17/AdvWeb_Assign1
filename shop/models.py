@@ -11,23 +11,19 @@ class Shop(models.Model):
     name = models.CharField(max_length=150)
     # connect the owner to a user int he User model
     owner = models.OneToOneField(User, related_name="owner")
-    # textfields allow for the use of "textareas".
     description = models.TextField(max_length=5000, default="Default Description. Looks like the Shop Owner hasn't uploaded a description..")
 
     def __str__(self):
         return str(self.id)
 
-    # this will create a shop when a user registers
-
+    # this will create a shop when a user registers. It uses the post_save signal when a new user instance is initiated
     def create_shop(sender, **kwargs):
         # get the User mnodel created signal - when user is created, get that instance
         user = kwargs["instance"]
         # if the kwargs is of a created instance:
         if kwargs["created"]:
             # set the owner column value to whatever has been obtained from the created user instance
-            # if user "Ben" registers, set owner value to "ben"
             up = Shop(owner=user)
-            # save this owner to database
             up.save()
     # this is the signal that tells django that after the User model (row/object) has been created, run the function
     post_save.connect(create_shop, sender=User)

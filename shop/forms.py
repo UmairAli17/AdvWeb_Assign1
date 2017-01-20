@@ -11,8 +11,6 @@ class UserRegForm(forms.ModelForm):
     # create the below function, this checks the currently submitted data and checks whether the password field
     # matches the confirm password field
     def clean_passwords(self):
-        # get values from password field and the conf_password field.
-        # if the values arent the same, then raise an error
         if self.cleaned_data['password'] != self.cleaned_data['conf_password']:
             raise forms.ValidationError("Your passwords do not match!")
         # else if it's matching, send the password along
@@ -29,9 +27,8 @@ class UserRegForm(forms.ModelForm):
         # else if the username they've entered is valid then send along the username
         return self.data['username']
 
-    # the clean method is what the form runs as part of the form class
+    # the clean method is what the form runs as part of the form class. the check_username and check_password are also ran within the clean method
     def clean(self, *args, **kwargs):
-        # the two custom functions have been called here on the clean to ensure theya re run.
         self.check_username()
         self.clean_passwords()
         return super(UserRegForm, self).clean()
@@ -42,16 +39,13 @@ class UserRegForm(forms.ModelForm):
             'username': forms.TextInput(attrs={'placeholder': 'Enter A Username Here', 'class': 'shop-formField'}),
             'email': forms.TextInput(attrs={'placeholder': 'Enter Your Email Here', 'class': 'shop-formField'}),
         }
-        # the registration form uses Django's User model
         model = User
-        # ensures the following fields are outputted from the model
         fields = ['username', 'email', 'password']
 
 
 # User Login form
 class UserLogForm(forms.ModelForm):
     class Meta:
-        # uses the user model
         model = User
         widgets = {
             'username': forms.TextInput(attrs={'placeholder': 'Username', 'class': 'shop-formField'}),
@@ -68,7 +62,7 @@ class EditShopForm(forms.ModelForm):
             'name': forms.TextInput(attrs={'placeholder': 'Enter Shop Name','class': 'shop-formField'}),
             'description': forms.Textarea(attrs={'placeholder': 'Enter Shop Description Here...', 'class': 'shop-formField'}),
         }
-        # exclude ensures that the owner field doesn't come up. owner will be set through the View function
+        # the exclude ensures that the owner field doesn't come up. owner will be set through the View function
         exclude = ['owner']
         fields = ['name', 'description']
 
@@ -78,7 +72,6 @@ class AddProductForm(forms.ModelForm):
     product_image = forms.FileField(label="Upload a Product Image", required=True)
     price = forms.DecimalField(label="Please Enter A Price")
     class Meta:
-        # uses product model
         model = Product
         widgets = {
             'product_name': forms.TextInput(attrs={'placeholder': 'Enter Product Name', 'class': 'shop-formField'}),
@@ -88,8 +81,8 @@ class AddProductForm(forms.ModelForm):
 
 
 # the formclass for the search bar.
+# search set to "false" so to ensure that the form input can be empty on all pages the search form appears in
 class ProductSearchForm(forms.Form):
-    # required is false so to make sure that a "required" error doesn't appear on every page
     search = forms.CharField(required=False)
 
 
