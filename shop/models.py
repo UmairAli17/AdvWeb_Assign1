@@ -32,15 +32,6 @@ class Shop(models.Model):
     # this is the signal that tells django that after the User model (row/object) has been created, run the function
     post_save.connect(create_shop, sender=User)
 
-    # sets a template property so to output a "default" shop image/ logo
-    @property
-    def shop_logo_img(self):
-        default_path = '/static/shop/images/dft/no-img.png'
-        if self.shop_logo:
-            return self.shop_logo.url
-        else:
-            return default_path
-
     # redirect user to the user's product page
     def get_absolute_url(self):
         return reverse('shop:my-products')
