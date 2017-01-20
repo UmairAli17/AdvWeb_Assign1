@@ -24,17 +24,14 @@ class RegisterView(CreateView):
          form = self.form_class(request.POST)
 
          if form.is_valid():
-             # save form data
              user = form.save(commit=False)
 
-            # get the username and wrap it in a variable
              username = form.cleaned_data['username']
-             # get the password and wrap into a variable
              password = form.cleaned_data['password']
 
-            # set_password to run the fucntion that encrypots the password (NO PLAIN_TEXT PASSWORDS)
+            # set_password encrypots the password (NO PLAIN_TEXT PASSWORDS)
              user.set_password(password)
-             # save user to database
+             # write user to database
              user.save()
 
              # once user is saved, authenticate (log them in ) by getting the username and password
@@ -63,23 +60,20 @@ class LoginView(View):
         # render the form in the template.
         return render(request, self.template_name, {'form': form})
 
-    # if POST data has been sent (login submission)
+    # This handles login submission
     def post(self, request):
-        # wrap the form text boxes in variables
         username = request.POST['username']
         password = request.POST['password']
-        # assign a variable to the function that authenticates the user
+        # authenticate the user with 
         user = authenticate(username=username, password=password)
 
-        # if the user exists
+        # if the user exists and their status is active on the db then log them in
         if user is not None:
             if user.is_active:
                 login(request, user)
                 return HttpResponseRedirect('/shop/')
             else:
-                # if user is not active, ask to logon again
                 return HttpResponseRedirect('/shop/login')
-        # or else, just redirect tot he login page
         return HttpResponseRedirect('/shop/login')
 
 # allows for the logging out of the user
