@@ -2,7 +2,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import AddProductForm, ProductSearchForm, EditShopForm
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic.list import ListView
-from django.views.generic import View, DetailView
+from django.views.generic import DetailView
+from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse_lazy
 from django.db.models import Q
 from django.contrib import messages
@@ -90,7 +91,6 @@ class MyProducts(LoginRequiredMixin, ListView):
 
 # Shows the product details
 class ProductDetailView(DetailView):
-    # this will get the product model for that product so that it can be displayed
     model = Product
     template_name = 'shop/product_detail.html'
 
@@ -116,9 +116,8 @@ class SearchList(ListView):
     context_object_name = 'search_list'
 
     # the following is what allows for the accessing of the value within the search box. it is a "get_queryset" as
-    # we want to query the model depending on what the user has searched
+    # query the Product model depending on what the user has searched for
     def get_queryset(self):
-        # get the value from the search box
         search = self.request.GET.get("search")
         # if there is a value in the search box, run the below query.
         if search:

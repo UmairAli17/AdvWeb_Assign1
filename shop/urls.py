@@ -47,11 +47,11 @@ urlpatterns = [
 
     # Show My Shop
     # 'shop/profile/'
-    url(r'^shop/profile/$', views.MyShopView.as_view(), name='my-shop'),
+    url(r'^profile/$', views.MyShopView.as_view(), name='my-shop'),
 
     # Edit My Shop
     # 'shop/profile/1'
-    url(r'^shop/profile/(?P<pk>[0-9]+)/$', views.EditMyShop.as_view(), name='edit-my-shop'),
+    url(r'^profile/(?P<pk>[0-9]+)/$', views.EditMyShop.as_view(), name='edit-my-shop'),
 
     # Search Products
     url(r'^search/', views.SearchList.as_view(), name='search'),

@@ -30,7 +30,7 @@ class Shop(models.Model):
 
     # redirect user to the user's product page
     def get_absolute_url(self):
-        return reverse('shop:my-products')
+        return reverse('shop:my-shop')
 
 
 # The class that will link a product to the shop
