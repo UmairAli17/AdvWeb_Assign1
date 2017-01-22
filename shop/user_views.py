@@ -13,7 +13,7 @@ class RegisterView(CreateView):
      form_class = UserRegForm
      template_name = 'shop/registration_form.html'
 
-     # display the template when this view is called - when the user requests the page itself
+     # display the template when this view is called
      def get(self, request):
          #display the form - None ensures that there won't be any data in it upon the user first accessing page
          form = self.form_class(None)
@@ -56,14 +56,13 @@ class LoginView(View):
     # the request that will render the form.
     def get(self, request):
         form = self.form_class(None)
-        # render the form in the template.
         return render(request, self.template_name, {'form': form})
 
     # This handles login submission
     def post(self, request):
         username = request.POST['username']
         password = request.POST['password']
-        # authenticate the user with 
+        # authenticate the user with the values passed in the above POST
         user = authenticate(username=username, password=password)
 
         # if the user exists and their status is active on the db then log them in
@@ -75,9 +74,9 @@ class LoginView(View):
                 return HttpResponseRedirect('/shop/login')
         return HttpResponseRedirect('/shop/login')
 
-# allows for the logging out of the user
+# allows for the logging out of the user.
 class LogoutView(View):
     def get(self, request):
         logout(request)
-        # send them back to the homepage
+        # send them back to the homepage upon successfully logging out
         return HttpResponseRedirect('/shop/')

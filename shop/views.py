@@ -16,15 +16,9 @@ from .models import Product, Shop
 
 # the homepage for the website. it will show all the shops. uses the ListView CBV for displaying multiple objects
 class IndexView(ListView):
-    # the template to display all shop
+    model = Shop
     template_name = 'shop/index.html'
-    # custom object for easier differentiation between object names
     context_object_name = 'shop_list'
-
-    # gets all Shop objects from the Shop model (table)
-    # def get_queryset is one of the views that we can override functions within CBV (Class-Based-Views)
-    def get_queryset(self):
-        return Shop.objects.all()
 
 # Show the shop's details 
 class DetailView(DetailView):
@@ -54,11 +48,10 @@ class EditMyShop(LoginRequiredMixin, UpdateView):
 
 # PRODUCT VIEWS
 
-# show all products
+# show all products, uploaded by all users (shop owners)
 class AllProducts(ListView):
     # Attach the product model to this View
     model = Product
-    # the template that is used to display the products
     template_name = 'shop/all_products.html'
 
 # create a product and assign the current logged in user.
@@ -104,10 +97,9 @@ class UpdateProduct(LoginRequiredMixin, UpdateView):
 
 
 # Allows for the deleting of products. DeleteView is a CBV that allows for one to do this and to set a success url once
-#  it is deleted
+#  it is deleted so that the user is sent to whatever page is defined within the "success_url"
 class DeleteProduct(LoginRequiredMixin, DeleteView):
     model = Product
-    # once successfully deleted, redirect back to same page
     success_url = reverse_lazy('shop:my-products')
 
 # The view that allows the user to search through a model which in this case is the Product model
@@ -123,7 +115,7 @@ class SearchList(ListView):
         search = self.request.GET.get("search")
         # if there is a value in the search box, run the below query.
         if search:
-            # the following query set will allow the user to search according to product name, distinict will ensure there are no duplicate results
+            # the following query set will allow the user to search according to product name - distinict will ensure there are no duplicate results
             queryset = Product.objects.filter(Q(product_name__icontains=search)).distinct
             return queryset
         else:
