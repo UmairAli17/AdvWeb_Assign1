@@ -6,12 +6,12 @@ from django import forms
 
 class UserRegForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Enter a Password Here', 'class': 'shop-formField'}))
-    conf_password = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Confirm Password Here', 'class': 'shop-formField'}))
+    confirm_password = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Confirm Password Here', 'class': 'shop-formField'}))
 
     # create the below function, this checks the currently submitted data and checks whether the password field
     # matches the confirm password field
     def clean_passwords(self):
-        if self.cleaned_data['password'] != self.cleaned_data['conf_password']:
+        if self.cleaned_data['password'] != self.cleaned_data['confirm_password']:
             raise forms.ValidationError("Your passwords do not match!")
         # else if it's matching, send the password along
         return self.data['password']
