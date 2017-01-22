@@ -15,7 +15,7 @@ class RegisterView(CreateView):
 
      # display the template when this view is called - when the user requests the page itself
      def get(self, request):
-         #display the form - None ensures that there won't be any data in it.. yet
+         #display the form - None ensures that there won't be any data in it upon the user first accessing page
          form = self.form_class(None)
          return render(request, self.template_name, {'form': form})
 
@@ -55,7 +55,6 @@ class LoginView(View):
 
     # the request that will render the form.
     def get(self, request):
-        # display the form with NO data as no POST request has been sent as of yet
         form = self.form_class(None)
         # render the form in the template.
         return render(request, self.template_name, {'form': form})

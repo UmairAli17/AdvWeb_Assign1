@@ -3,7 +3,6 @@ from .forms import AddProductForm, ProductSearchForm, EditShopForm
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic.list import ListView
 from django.views.generic import DetailView
-from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse_lazy
 from django.db.models import Q
 from django.contrib import messages
@@ -11,6 +10,9 @@ from .models import Product, Shop
 
 
 # SHOP VIEWS
+
+# LoginRequiredMixin
+# Allows only authenticated (logged in users) to access the view(s)
 
 # the homepage for the website. it will show all the shops. uses the ListView CBV for displaying multiple objects
 class IndexView(ListView):
