@@ -20,9 +20,8 @@ class IndexView(ListView):
     template_name = 'shop/index.html'
     context_object_name = 'shop_list'
 
-# Show the shop's details 
+# Show the shop's details through the Shop model and shop primary key
 class DetailView(DetailView):
-    # Attach the product model to this View
     model = Shop
     template_name = 'shop/detail.html'
 
@@ -33,9 +32,7 @@ class MyShopView(LoginRequiredMixin, DetailView):
 
     # get the current user's shop and pass that into the object
     def get_object(self, queryset=None):
-        # get the current user's shop
         user = self.request.user.id
-        # get the user_shop where the owner is the current logged in user
         usr_shop = Shop.objects.get(owner=user)
         return usr_shop
 
@@ -63,9 +60,8 @@ class ProductCreate(LoginRequiredMixin, CreateView):
     # if the form is valid then..
     def form_valid(self, form):
         new_product = form.save(commit=False)
-        # get current logged in user
         user = self.request.user.id
-        # match the current logged in user to an owner in the Shop model.  this will get the primary for that row
+        # match the current logged in user from above to an "owner" in the Shop model and get the shop id for that row
         s = Shop.objects.get(owner=user)
         # assign the shop instance (id) to the product
         new_product.business = s
@@ -73,14 +69,15 @@ class ProductCreate(LoginRequiredMixin, CreateView):
         new_product.save()
         return super(ProductCreate, self).form_valid(form)
 
-# View that shows all the products the current user has added. Uses ListView CBV
+# View that shows all the products the current user has added.
 class MyProducts(LoginRequiredMixin, ListView):
     template_name = 'shop/my_products.html'
     context_object_name = 'my_products'
 
     def get_queryset(self):
         user = self.request.user.id
-        # run a query that searches for any product which belongs to a shop where the user is the owner
+        # run a query that searches for any product which belongs to a shop where the user is 
+        # the owner through the "business" foreign key
         queryset = Product.objects.filter(business__owner=user)
         return queryset
 
@@ -115,7 +112,8 @@ class SearchList(ListView):
         search = self.request.GET.get("search")
         # if there is a value in the search box, run the below query.
         if search:
-            # the following query set will allow the user to search according to product name - distinict will ensure there are no duplicate results
+            # get a product name from Product model that shares a "LIKENESS" using "icontains" from whatever value is
+            # passed through the search box
             queryset = Product.objects.filter(Q(product_name__icontains=search)).distinct
             return queryset
         else:
